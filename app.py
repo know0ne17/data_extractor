@@ -15,6 +15,9 @@ app=Flask(__name__)
 
 # config. the upload dir
 app.config['UPLOADS_DEFAULT_DEST'] = 'uploads'
+
+if not os.path.exists('uploads'):
+    os.makedirs('uploads')
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'docx'}
 documents = UploadSet('documents', DOCUMENTS)
 configure_uploads(app,documents)
@@ -27,9 +30,6 @@ def upload_file():
     
 
     uploaded_files= request.files.getlist('files')
-    # file = request.files['files']
-    # if file.filename == '':
-    #     return 'No selected file'
 
     wb=Workbook()
     ws=wb.active
